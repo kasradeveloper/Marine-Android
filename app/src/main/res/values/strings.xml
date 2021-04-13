@@ -1,0 +1,31 @@
+<resources>
+<!--    region login-->
+    <string name="enter_title_login">login</string>
+    <string name="enter_description_login">please enter your PhoneNumber</string>
+    <string name="cellphone_login">cellphone number</string>
+    <string name="get_code">Get Code</string>
+    <string name="verification_code_txt">verification code send to  %1$S </string>
+    <string name="change_phone_number">change cell phone number</string>
+    <string name="send_again_code"> %1$S time to send again</string>
+    <string name="login">login</string>
+    <string name="phone_number_txt"> کد ورود به شماره تماس %1$S ارسال شد لطفا  کد ورود را در زیر وارد کنید </string>
+
+
+<!--    endregion-->
+<!--    region main-->
+    <string name="insurance_marketing">Insurance marketing</string>
+    <string name="wellcome_app">%1$S WellCome!</string>
+    <string name="home">Home</string>
+    <string name="insurance_hitory"> Insurance History</string>
+    <string name="wallet">Wallet</string>
+    <string name="profile">Profile</string>
+    <string name="issuance">issuance</string>
+    <string name="awaiting">awaiting</string>
+<!--    endregion-->
+    <!--    region thirdparty-->
+    <string name="count_financial_accident">حساب تعداد خسارت های مالی</string>
+    <string name="count_health_accident">حساب تعداد خسارت های جانی</string>
+    <string name="count_driver_accident">حساب تعداد خسارت های راننده</string>
+    <string name="price_per_melion">%1$Sملیون تومان</string>
+    <!--    endregion-->
+</resources>

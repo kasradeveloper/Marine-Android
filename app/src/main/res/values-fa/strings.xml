@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bime</string>
+    <!--    region login-->
+    <string name="enter_title_login">ورود یا عضویت</string>
+    <string name="enter_description_login">برای ورود شماره تماس خود را در زیر وارد کنید</string>
+    <string name="cellphone_login">شماره همراه</string>
+    <string name="get_code">دریافت کد</string>
+    <string name="verification_code_txt">کد ورود به شماره تماس %1$S  ارسال شد </string>
+    <string name="change_phone_number">تغییر شماره تلفن همراه</string>
+    <string name="send_again_code"> %1$S تا ارسال مجدد کد</string>
+    <string name="login">ورود</string>
+    <string name="phone_number_txt"> کد ورود به شماره تماس %1$S ارسال شد لطفا  کد ورود را در زیر وارد کنید </string>
+
+    <!--    endregion-->
+    <!--    region main-->
+    <string name="insurance_marketing">بازاریابی بیمه</string>
+    <string name="wellcome_app">%1$S خوش امدید!</string>
+    <string name="home">خانه</string>
+    <string name="insurance_hitory">سوابق بیمه</string>
+    <string name="wallet">کیف پول</string>
+    <string name="profile">حساب کاربری</string>
+    <string name="issuance">صادر شده</string>
+    <string name="awaiting">در انتظار</string>
+    <!--    endregion-->
+<!--    region thirdparty-->
+    <string name="count_financial_accident">حساب تعداد خسارت های مالی</string>
+    <string name="count_health_accident">حساب تعداد خسارت های جانی</string>
+    <string name="count_driver_accident">حساب تعداد خسارت های راننده</string>
+    <string name="price_per_melion">%1$Sملیون تومان</string>
+
+    <!--    endregion-->
+</resources>
