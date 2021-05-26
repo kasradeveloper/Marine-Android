@@ -1,24 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#030C18</color>
-    <color name="colorPrimaryDark">#030C18</color>
-    <color name="colorAccent">#AAAAAA</color>
-    <color name="colorwhite">#ffffff</color>
-    <color name="colorComponentBg">#18202B</color>
-    <color name="colorTxtHint">#C1C1C1</color>
-    <color name="colorButtonTxtColor">#17172C</color>
-    <color name="colorTxtGray">#81858B</color>
-    <color name="colorToolbar">#6F18202B</color>
-    <color name="colorRed">#53292E</color>
-    <color name="colorGreen">#183530</color>
-    <color name="colorSeekBar">#2D3541</color>
-    <color name="colorPurple">#5E5CE6</color>
-    <color name="colorPurpleOpacity">#1D5E5CE6</color>
-    <color name="colorComponentOpacity">#8F212D3E</color>
-    <color name="colorGreenToast">#39C057</color>
-    <color name="colorRedToast">#F15E60</color>
-    <color name="colorYellowAwait">#34F1A40F</color>
-    <color name="colorGreenAccept">#3939C057</color>
-    <color name="colorYellowAwaitTxt">#F1A40F</color>
+    <color name="colorWhiteOpa10">#1AFFFFFF</color>
+    <color name="colorWhiteOpa30">#2FFFFFFF</color>
+    <color name="colorWhiteOpa2">#14FFFFFF</color>
+    <color name="colorGrayOpa15">#FFF</color>
+    <color name="colorGrayOpa30">#FFF</color>
+    <color name="colorTotalPresence">#7DC9BD</color>
+
+    <color name="colorContact1">#c68be1</color>
+    <color name="colorContact2">#ee93a8</color>
+    <color name="colorContact3">#a1887f</color>
+    <color name="colorContact4">#da8fbe</color>
+    <color name="colorContact5">#ec9a2e</color>
+
+    //App color
+    <color name="colorPrimaryLight">#265dde</color>
+    <color name="colorPrimary">#2151C5</color>
+    <color name="colorSecondaryLight">#3A84F7</color>
+    <color name="colorSecondary">#2461BF</color>
+    <color name="colorSuccessLight">#5FC28F</color>
+    <color name="colorSuccess">#488D69</color>
+    <color name="colorWarningLight">#FFD66B</color>
+    <color name="colorWarning">#EFB215</color>
+    <color name="colorDangerLight">#DD5D59</color>
+    <color name="colorDanger">#BC3430</color>
+    <color name="colorDisableLight">#E3E3E3</color>
+    <color name="colorDarkGray">#707070</color>
+    <color name="colorGray">#919191</color>
+    <color name="colorLightGray">#B9B9B9</color>
+    <color name="colorBackground">#F4F6FB</color>
+    <color name="colorLightBackground">#FBFBFB</color>
+    <color name="colorLightBlue">#E2EFFE</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBrickOrange">#F29F81</color>
+    <color name="colorHorizontalLine">#F0F0F0</color>
 
 </resources>

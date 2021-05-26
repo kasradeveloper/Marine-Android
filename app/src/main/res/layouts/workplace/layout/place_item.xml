@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="76dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:weightSum="2">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+
+            android:layout_weight="0.3">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/icon_workplace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/icon_workplace"
+                android:textSize="32sp"
+                android:textColor="@color/colorDangerLight"
+                android:fontFamily="@font/unicons"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/place_name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="irankhodro"
+                android:fontFamily="@font/font_regular"
+                android:textColor="@color/colorDarkGray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/place_feature_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="52.2365689"
+                android:textColor="@color/colorGray"
+                android:textSize="14sp"
+                android:fontFamily="@font/font_light"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/line"/>
+
+</LinearLayout>

@@ -47,22 +47,24 @@ android {
         main {
             res.srcDirs =
                     [
-                            'src/main/res/layouts',
-                            'src/main/res',
-                            'src/main/res/layouts/main',
-                            'src/main/res/layouts/main/home',
-                            'src/main/res/layouts/main/insurance_history',
-                            'src/main/res/layouts/main/wallet',
-                            'src/main/res/layouts/main/profile',
-                            'src/main/res/layouts/user_data',
-                            'src/main/res/layouts/skeleton',
-                            'src/main/res/layouts/checkout',
-                            'src/main/res/layouts/increase_credit',
                             'src/main/res/layouts/login',
-                            'src/main/res/layouts/login/verification_code',
-
-
-
+                            'src/main/res/layouts/splash',
+                            'src/main/res/layouts/other',
+                            'src/main/res/layouts/main',
+                            'src/main/res/layouts/performance',
+                            'src/main/res/layouts/requests',
+                            'src/main/res/layouts/portfolio',
+                            'src/main/res/layouts/addplace',
+                            'src/main/res/layouts/workplace',
+                            'src/main/res/layouts/addworkplace',
+                            'src/main/res/layouts/home',
+                            'src/main/res/layouts/ticket',
+                            'src/main/res/layouts/ticket/ticket_detail',
+                            'src/main/res/layouts/subperson',
+                            'src/main/res/layouts/message_inbox',
+                            'src/main/res/layouts/skeleton',
+                            'src/main/res/layouts',
+                            'src/main/res'
                     ]
         }
     }

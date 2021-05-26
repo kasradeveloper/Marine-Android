@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_panel_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="0dp"
+        sothree:umanoParallaxOffset="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <FrameLayout
+                android:id="@+id/toolbar_linear"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp"
+                    android:weightSum="1">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/toolbar_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/font_light"
+                        android:gravity="center|end"
+                        android:maxWidth="120dp"
+                        android:maxLength="25"
+                        android:maxLines="1"
+                        android:paddingBottom="1dp"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:background="@color/colorWhite"
+                        android:paddingBottom="1dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/workperdiod_selected_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/font_light"
+                        android:gravity="center_vertical|start"
+                        android:textColor="@color/colorWhite" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/spinner_img"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="4dp"
+                        android:scaleType="fitCenter" />
+
+
+
+                    <!--                            <Spinner-->
+                    <!--                                android:id="@+id/month_spinner"-->
+                    <!--                                android:layout_width="wrap_content"-->
+                    <!--                                android:layout_height="match_parent"-->
+                    <!--                                android:layout_marginStart="8dp"-->
+                    <!--                                android:dropDownWidth="match_parent"-->
+                    <!--                                android:gravity="center_vertical|start"-->
+                    <!--                                android:spinnerMode="dialog"-->
+                    <!--                                />-->
+
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/arrow_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
+                    android:padding="4dp"
+                    android:tint="@color/colorWhite"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_arrow_right" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="16dp"
+                    android:padding="4dp"
+                    android:tint="@color/colorWhite"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/icon_menu" />
+
+            </FrameLayout>
+
+            <include
+                layout="@layout/monthly_performance"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.5" />
+
+            <include
+                layout="@layout/day_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@drawable/all_shadow_top_down"
+                app:layout_anchor="@+id/layout_day_calendar"
+                app:layout_anchorGravity="bottom" />
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/swipe_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6.7">
+
+                <LinearLayout
+                    android:id="@+id/linear_performance_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_shift_name"
+                           android:fontFamily="@font/font_medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|end"
+                            android:textColor="@color/colorDarkGray"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="0.5"
+                            android:background="@color/colorGrayOpa15" />
+
+                        <Button
+                            android:id="@+id/btn_sum_of_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="12dp"
+                            android:background="@drawable/solid_full_radius"
+                            android:gravity="center"
+                            android:text="@string/btn_sum_day"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="10sp"
+                            app:elevation="0dp" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_day_timeline"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_weight="5.9" />
+                    <com.github.clans.fab.FloatingActionMenu
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="16dp"
+                        app:menu_colorNormal="@color/colorPrimary"
+                        app:menu_colorPressed="@color/colorPrimary"
+                        android:id="@+id/fab"
+                        app:menu_labels_customFont="@string/font_roboto_medium"
+
+                        >
+                        <com.github.clans.fab.FloatingActionButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fab_label="ثبت تردد فراموشی"
+                            app:fab_colorPressed="@color/colorPrimary"
+                            app:fab_colorNormal="@color/colorPrimary"
+                            android:tint="@color/colorWhite"
+                            android:id="@+id/register_attendance_request"/>
+                        <com.github.clans.fab.FloatingActionButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:fab_colorNormal="@color/colorPrimary"
+                            app:menu_colorNormal="@color/colorPrimary"
+                            app:fab_colorPressed="@color/colorPrimary"
+                            app:fab_label="ثبت درخواست"
+                            android:tint="@color/colorWhite"
+                            android:id="@+id/register_request"/>
+                    </com.github.clans.fab.FloatingActionMenu>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_performance_items_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="blocksDescendants"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/create_request"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

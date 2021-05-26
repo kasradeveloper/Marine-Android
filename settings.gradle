@@ -1,2 +1,2 @@
 include ':app',':persiandatepicker'
-rootProject.name = "base"
+rootProject.name = "atency_kotlin"

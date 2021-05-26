@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_panel_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="0dp"
+        sothree:umanoParallaxOffset="100dp">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/sub_person_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:elevation="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/toolbar_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon_menu_ticket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    app:srcCompat="@drawable/icon_menu"
+                    app:tint="@color/colorWhite" />
+
+                <FrameLayout
+                    android:id="@+id/toolbar_ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|start"
+                        android:maxLines="1"
+                        android:text="@string/tickets"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/font_regular"/>
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/icon_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="16dp"
+                        app:srcCompat="@drawable/icon_search"
+                        app:tint="@color/colorWhite" />
+                </FrameLayout>
+
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                   android:fontFamily="@font/font_medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:focusable="true"
+                    android:visibility="gone"
+                    app:closeIcon="@drawable/icon_close_search"
+                    app:defaultQueryHint="@string/message_search_title"
+                    app:iconifiedByDefault="true"
+                    android:theme="@style/SearchViewStyle"
+                    app:searchIcon="@null" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorGrayOpa30" />
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1">
+                            <include layout="@layout/empty_content" />
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycler_ticket_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"/>
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/paging_progressbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:visibility="gone" />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                        android:id="@+id/add_ticket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="18dp"
+                        android:fontFamily="@font/font_regular"
+                        android:gravity="center"
+                        android:paddingTop="0dp"
+                        android:paddingBottom="0dp"
+                        android:text="@string/new_txt"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp"
+                        android:theme="@style/fab_style"
+                        app:icon="@drawable/ic_plus"
+                        app:iconSize="16dp"
+                        app:iconTint="@color/colorWhite"/>
+
+                </FrameLayout>
+
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/new_ticket"
+                layout="@layout/new_ticket"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <include
+                android:id="@+id/ticket_detail"
+                layout="@layout/ticket_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
