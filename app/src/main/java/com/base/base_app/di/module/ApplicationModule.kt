@@ -8,6 +8,7 @@ import com.base.base_app.data.prefrences.AppPrefrencesImpl
 
 import com.base.base_app.data.network.ApiHelper
 import com.base.base_app.data.network.ApiHelperImpl
+import com.base.base_app.data.network.OAuthInterceptor
 import com.base.base_app.data.prefrences.AppPrefrencesHelper
 import com.base.bime.data.room.ApplicationDB
 import com.base.bime.data.room.DataBaseHelper
@@ -33,11 +34,12 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp():OkHttpClient{
+    fun provideOkHttp(auth:OAuthInterceptor):OkHttpClient{
         val loggingInterceptor=HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(auth)
             .build()
     }
     @Provides
@@ -46,7 +48,6 @@ class ApplicationModule {
         Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(baseUrl)
-//            .addConverterFactory(MoshiConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     @Provides
@@ -72,4 +73,10 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideAppDataManger(appDataManagerImpl: AppDataManagerImpl): AppDataManager =appDataManagerImpl
+
+    @Provides
+    @Singleton
+    fun provideAuthorization():OAuthInterceptor{
+        return OAuthInterceptor()
+    }
 }

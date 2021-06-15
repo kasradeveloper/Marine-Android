@@ -8,7 +8,6 @@ data class CreditParams(
     @SerializedName("ID")
     @Expose
     var iD :Int,
-
     @SerializedName("Description")
     @Expose
     var description: String? = null,
@@ -16,6 +15,5 @@ data class CreditParams(
     @SerializedName("RequestType")
     @Expose
     var requestType: RequestType? = null
-
 
     )

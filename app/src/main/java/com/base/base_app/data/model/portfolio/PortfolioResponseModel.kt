@@ -5,7 +5,7 @@ import com.base.base_app.data.model.workplace.WorkplaceModel
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-internal class PortfolioResponseModel(
+class PortfolioResponseModel(
 
     @SerializedName("Requests")
     @Expose

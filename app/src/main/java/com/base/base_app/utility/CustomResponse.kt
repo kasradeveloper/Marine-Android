@@ -1,5 +1,7 @@
 package com.base.base_app.utility
 
+import kotlinx.coroutines.flow.Flow
+
 data class CustomResponse<out T>(val status: Status, val data:T?, val message:String?) {
     companion object {
         fun <T> success(data: T?): CustomResponse<T> = CustomResponse(Status.SUCCESS, data, null)
