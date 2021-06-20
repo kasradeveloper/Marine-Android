@@ -65,7 +65,6 @@
                 android:layout_marginBottom="12dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="16dp"
-                app:civ_fill_color="@color/colorWhite"
                 android:src="@color/colorWhite"
                 />
         </FrameLayout>
@@ -102,6 +101,5 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </LinearLayout>
-    <include layout="@layout/line"/>
     </LinearLayout>
 </FrameLayout>

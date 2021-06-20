@@ -1,0 +1,57 @@
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        buildConfigField "String",  "HTTPS","\"https://\""
+        buildConfigField "String",  "HTTP", "\"http://\""
+    }
+
+//    signingConfigs {
+//        config {
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//        }
+//    }
+    flavorDimensions "develop"
+    buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            debuggable true
+            ext.alwaysUpdateBuildId = false
+            crunchPngs false
+            testCoverageEnabled = "true"
+            manifestPlaceholders = [
+                    onesignal_app_id               : '1ed14b4e-19a7-4c54-adb9-41054e304a78',
+                    // Project number pulled from dashboard, local value is ignored.
+                    onesignal_google_project_number: '707432998531'
+            ]
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    onesignal_app_id               : '6d7fed1c-2432-43a9-ab55-71b53ab95dfc',
+                    // Project number pulled from dashboard, local value is ignored.
+                    onesignal_google_project_number: '263734697941'
+                    ]
+
+        }
+    }
+    productFlavors {
+        develop {
+            dimension "develop"
+            resValue "string", "app_name", "Atency DEBUG"
+            buildConfigField("String", "db_name", "\"AtencyDebug\"")
+            buildConfigField("int", "DB_SCHEMA_VERSION", "13")
+            buildConfigField("String", "BASE_URL","\"https://atencytest.ir\"")
+        }
+        production {
+            resValue "string", "app_name", "Atency"
+            buildConfigField("String", "db_name", "\"Atency\"")
+            buildConfigField("int", "DB_SCHEMA_VERSION", "13")
+            buildConfigField("String", "BASE_URL","\"https://atency.com\"")
+
+        }
+    }
+}

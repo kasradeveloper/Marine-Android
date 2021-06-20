@@ -7,7 +7,6 @@
     android:layout_height="0dp"
     android:layout_weight="1"
     android:gravity="center"
-    tools:showIn="@layout/fragment_requests"
     android:layoutDirection="rtl"
     >
 
@@ -44,7 +43,8 @@
         android:layout_gravity="end"
         app:srcCompat="@drawable/icon_arrow_left"
         android:paddingStart="8dp"
-        android:paddingEnd="8dp"/>
+        android:paddingEnd="8dp"
+        tools:ignore="VectorDrawableCompat" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -55,5 +55,6 @@
         android:layout_gravity="start"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        app:srcCompat="@drawable/icon_arrow_right" />
+        app:srcCompat="@drawable/icon_arrow_right"
+        tools:ignore="VectorDrawableCompat" />
 </FrameLayout>
