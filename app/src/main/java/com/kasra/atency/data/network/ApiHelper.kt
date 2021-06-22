@@ -36,99 +36,98 @@ import okhttp3.ResponseBody
 
 interface ApiHelper {
 
-    suspend fun healthCheck(isMain: Boolean): Flow<CustomResponse<HealthCheckModel?>>
+    suspend fun healthCheck(isMain: Boolean): Flow<CustomResponse<HealthCheckModel>>
     suspend fun loginPostRequest(
         grantType: String?,
         userName: String?,
         password: String?,
         clientId: String?
-    ): Flow<CustomResponse<LoginResponse?>>
+    ): Flow<CustomResponse<LoginResponse>>
 
-    suspend fun logoutCall(cellInfoModel: CellInfoModel?): Flow<CustomResponse<JsonObject?>>
-    suspend fun getUserInfo(): Flow<CustomResponse<UserInfo?>>
+    suspend fun logoutCall(cellInfoModel: CellInfoModel?): Flow<CustomResponse<JsonObject>>
+    suspend fun getUserInfo(): Flow<CustomResponse<UserInfo>>
     suspend fun getAllMessages(
         personelId: Int,
         from: Int,
         size: Int,
         searchedText: String?
-    ): Flow<CustomResponse<List<MessageModel?>?>>
+    ): Flow<CustomResponse<List<MessageModel>>>
 
-    suspend fun getBadgeMessage(): Flow<CustomResponse<JsonObject?>>
+    suspend fun getBadgeMessage(): Flow<CustomResponse<JsonObject>>
 
-    suspend fun getWorkplaces(workplaceType: Int): Flow<CustomResponse<List<WorkplaceModel?>?>>
-    suspend fun getAllRequestTypes():Flow<CustomResponse<List<RequestType?>?>>
+    suspend fun getWorkplaces(workplaceType: Int): Flow<CustomResponse<List<WorkplaceModel>>>
+    suspend fun getAllRequestTypes():Flow<CustomResponse<List<RequestType>>>
     suspend fun getMyRequests(
         fromDate: String?,
         toDate: String?,
         personnelId: String?
     ): Flow<CustomResponse<List<MyRequestsModel>>>
 
-    suspend fun getProfilePicture(): Flow<CustomResponse<ResponseBody?>>
+    suspend fun getProfilePicture(): Flow<CustomResponse<ResponseBody>>
     suspend fun getPermissions(
         from: Int,
         size: Int
-    ): Flow<CustomResponse<List<PermissionResponseModel?>?>>
+    ): Flow<CustomResponse<List<PermissionResponseModel>>>
 
-    suspend fun getportfolioItems(portfolioParamsModel: PortfolioParamsModel): Flow<CustomResponse<List<PortfolioResponseModel?>?>>
-    suspend fun getWorkPeriod(fromDate: String?): Flow<CustomResponse<GetAllWorkperiods?>>
+    suspend fun getportfolioItems(portfolioParamsModel: PortfolioParamsModel): Flow<CustomResponse<List<PortfolioResponseModel>>>
+    suspend fun getWorkPeriod(fromDate: String?): Flow<CustomResponse<GetAllWorkperiods>>
     suspend fun getPairedAttendanceLogs(
         personnelId: String?,
         fromDate: String?,
         toDate: String?
-    ): Flow<CustomResponse<List<PairedAttendanceListResponseModel?>?>>
+    ): Flow<CustomResponse<List<PairedAttendanceListResponseModel>>>
 
     suspend fun getAttendanceLog(
         personnelId: String?,
         fromDate: String?,
         toDate: String?,
         PairedAttendanceType: String
-    ): Flow<CustomResponse<List<AttendanceLogResponseModel?>?>>
+    ): Flow<CustomResponse<List<AttendanceLogResponseModel>>>
 
-    suspend fun approveRequest(creditParams: CreditParams?): Flow<CustomResponse<ResponseApprove?>>
-    suspend fun denyRequest(creditParams: CreditParams?): Flow<CustomResponse<ResponseDeny?>>
-    suspend fun deleteRequest(creditParams: CreditParams?): Flow<CustomResponse<ResponseDeny?>>
-    suspend fun addRequest(addRequestParamsModel: AddRequestParamsModel?): Flow<CustomResponse<ResponseDeny?>>
-    suspend fun addWorkplace(workplaceModel: WorkplaceModel?): Flow<CustomResponse<WorkplaceModel?>>
-    suspend fun deleteWorkplace(workplace: WorkplaceModel?): Flow<CustomResponse<WorkplaceModel?>>
-    suspend fun updateWorkplace(workplace: WorkplaceModel?): Flow<CustomResponse<WorkplaceModel?>>
+    suspend fun approveRequest(creditParams: CreditParams?): Flow<CustomResponse<ResponseApprove>>
+    suspend fun denyRequest(creditParams: CreditParams?): Flow<CustomResponse<ResponseDeny>>
+    suspend fun deleteRequest(creditParams: CreditParams?): Flow<CustomResponse<ResponseDeny>>
+    suspend fun addRequest(addRequestParamsModel: AddRequestParamsModel?): Flow<CustomResponse<ResponseDeny>>
+    suspend fun addWorkplace(workplaceModel: WorkplaceModel?): Flow<CustomResponse<WorkplaceModel>>
+    suspend fun deleteWorkplace(workplace: WorkplaceModel?): Flow<CustomResponse<WorkplaceModel>>
+    suspend fun updateWorkplace(workplace: WorkplaceModel?): Flow<CustomResponse<WorkplaceModel>>
     suspend fun getDayTimeline(
         dayTimelineParamsModel: DayTimelineParamsModel,
         pageNumber: Int,
         pageSize: Int
-    ): Flow<CustomResponse<DayTimelineResponseModel?>>
+    ): Flow<CustomResponse<DayTimelineResponseModel>>
 
     suspend fun getMonthlyPerformance(
         performanceSummary: PerformanceSummaryReportParamsModel,
         pageNumber: Int,
         pageSize: Int
-    ): Flow<CustomResponse<PerformanceSummaryReportResponseModel?>>
+    ): Flow<CustomResponse<PerformanceSummaryReportResponseModel>>
 
-    suspend fun attLogPostRequest(attLogModel: AttLogModel?): Flow<CustomResponse<AttLogResponseModel?>>
-    suspend fun updateCellInfo(cellInfoModel: CellInfoModel?): Flow<CustomResponse<JsonObject?>>
+    suspend fun attLogPostRequest(attLogModel: AttLogModel?): Flow<CustomResponse<AttLogResponseModel>>
+    suspend fun updateCellInfo(cellInfoModel: CellInfoModel?): Flow<CustomResponse<JsonObject>>
     suspend fun updateStatusCall(
         messageId: String?,
         messageStatus: String?,
         modificationValue: String?
-    ): Flow<CustomResponse<JsonObject?>>
+    ): Flow<CustomResponse<JsonObject>>
 
     suspend fun checkForUpdate(
         version: String?,
-        cellInfoModel: CellInfoModel?
-    ): Flow<CustomResponse<CheckUpdateResponseModel?>>
+    ): Flow<CustomResponse<CheckUpdateResponseModel>>
 
-    suspend fun getTicketCategoryTypes(): Flow<CustomResponse<List<Type?>?>>
-    suspend fun getTicketPriorityTypes(): Flow<CustomResponse<List<Type?>?>>
-    suspend fun addTicket(ticketItem: TicketItem?): Flow<CustomResponse<JsonObject?>>
+    suspend fun getTicketCategoryTypes(): Flow<CustomResponse<List<Type>>>
+    suspend fun getTicketPriorityTypes(): Flow<CustomResponse<List<Type>>>
+    suspend fun addTicket(ticketItem: TicketItem?): Flow<CustomResponse<JsonObject>>
     suspend fun getTicket(
         searchValue: String?,
         pageNumber: Int,
         pageSize: Int
-    ): Flow<CustomResponse<List<TicketItem?>?>>
+    ): Flow<CustomResponse<List<TicketItem>>>
 
     suspend fun getTicketAction(
         ticketId: String?,
         actionTypeValue: String?
-    ): Flow<CustomResponse<List<TicketAction?>?>>
+    ): Flow<CustomResponse<List<TicketAction>>>
 
-    suspend fun addTicketAction(action: TicketAction?): Flow<CustomResponse<TicketItem?>>
+    suspend fun addTicketAction(action: TicketAction?): Flow<CustomResponse<TicketItem>>
 }

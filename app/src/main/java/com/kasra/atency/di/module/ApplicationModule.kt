@@ -8,8 +8,12 @@ import com.kasra.atency.data.network.ApiServices
 import com.kasra.atency.data.network.OAuthInterceptor
 import com.kasra.atency.data.prefrences.AppPrefrencesHelper
 import com.kasra.atency.data.prefrences.AppPrefrencesImpl
-import com.kasra.atency.data.repository.UserRepository
-import com.kasra.atency.data.repository.UserRepositoryImpl
+import com.kasra.atency.data.repository.BaseRepository
+import com.kasra.atency.data.repository.BaseRepositoryImpl
+import com.kasra.atency.data.repository.user.UserRepository
+import com.kasra.atency.data.repository.user.UserRepositoryImpl
+import com.kasra.atency.data.repository.workplace.WorkPlaceRepository
+import com.kasra.atency.data.repository.workplace.WorkPlaceRepositoryImpl
 import com.kasra.atency.data.room.ApplicationDB
 import com.kasra.bime.data.room.DataBaseHelper
 import com.kasra.bime.data.room.DataBaseImpl
@@ -70,11 +74,19 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl):UserRepository =userRepositoryImpl
+    fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository =userRepositoryImpl
 
     @Provides
     @Singleton
-    fun provideAuthorization():OAuthInterceptor{
-        return OAuthInterceptor()
+    fun provideWorkPlaceRepository(workPlaceRepositoryImpl: WorkPlaceRepositoryImpl): WorkPlaceRepository =workPlaceRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideBaseRepository(baseRepositoryImpl: BaseRepositoryImpl): BaseRepository =baseRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideAuthorization(appPrefrencesHelper: AppPrefrencesHelper):OAuthInterceptor{
+        return OAuthInterceptor(appPrefrencesHelper)
     }
 }

@@ -26,10 +26,10 @@
             android:id="@+id/nav_requests"
             android:title="@string/nav_requests" />
 
-<!--        <item-->
-<!--            android:id="@+id/nav_messages"-->
-<!--            android:title="@string/title_message_inbox"-->
-<!--            app:actionLayout="@layout/badge_item" />-->
+        <item
+            android:id="@+id/nav_messages"
+            android:title="@string/title_message_inbox"
+            app:actionLayout="@layout/badge_item" />
 
         <item
             android:id="@+id/nav_outdoor_duty"
@@ -41,11 +41,6 @@
             android:title="@string/support_tickets"
             android:visible="true" />
 
-        <item
-            android:id="@+id/nav_setting"
-            android:checkable="false"
-            android:title="@string/drawer_setting"
-            android:visible="false" />
 
     </group>
 

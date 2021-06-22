@@ -10,4 +10,6 @@ interface AppPrefrencesHelper {
     fun getRefreshToken(): String?
     fun setInquiryId(inquiryId: String): Unit?
     fun getInquiryId(): String?
+    fun getDeviceID(): String
+    fun saveDeviceID(deviceID: String?)
 }

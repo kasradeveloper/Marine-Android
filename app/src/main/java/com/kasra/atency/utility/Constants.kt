@@ -4,5 +4,7 @@ package com.kasra.atency.utility
 val GRANTTYPE: String = "password"
 val CLIENTID: String = "asdf"
 val PLUS: String = "+"
+val ANDROID: String = "Android"
+val WORKPLACETYPE: Int = 33
 //endregion
 

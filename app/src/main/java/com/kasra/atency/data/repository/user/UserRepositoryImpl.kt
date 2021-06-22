@@ -1,12 +1,14 @@
-package com.kasra.atency.data.repository
+package com.kasra.atency.data.repository.user
 
 import com.google.gson.JsonObject
 import com.kasra.atency.data.model.Info.CellInfoModel
 import com.kasra.atency.data.model.LoginResponse
+import com.kasra.atency.data.model.UserInfo
 import com.kasra.atency.data.model.checkinout.AttLogModel
 import com.kasra.atency.data.model.credit.CreditParams
 import com.kasra.atency.data.model.performance.day.DayTimelineParamsModel
 import com.kasra.atency.data.model.performance.summary.PerformanceSummaryReportParamsModel
+import com.kasra.atency.data.model.permission.PermissionResponseModel
 import com.kasra.atency.data.model.portfolio.PortfolioParamsModel
 import com.kasra.atency.data.model.request.AddRequestParamsModel
 import com.kasra.atency.data.model.ticket.TicketAction
@@ -15,8 +17,11 @@ import com.kasra.atency.data.model.workplace.WorkplaceModel
 import com.kasra.atency.data.network.ApiHelper
 import com.kasra.atency.data.network.OAuthInterceptor
 import com.kasra.atency.data.prefrences.AppPrefrencesHelper
+import com.kasra.atency.data.repository.BaseRepository
 import com.kasra.atency.utility.CustomResponse
 import com.kasra.atency.utility.enums.MyEnums
+import com.kasra.bime.data.room.DataBaseHelper
+import io.sentry.Sentry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -24,6 +29,8 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val apiHelper: ApiHelper,
     private val preferences: AppPrefrencesHelper,
+    private val dataBaseHelper: DataBaseHelper,
+    private val baseRepository: BaseRepository,
     auth: OAuthInterceptor
 ) : UserRepository {
     override suspend fun healthCheck(
@@ -35,87 +42,46 @@ class UserRepositoryImpl @Inject constructor(
         userName: String?,
         password: String?,
         clientId: String?,
-    ): Flow<CustomResponse<LoginResponse?>> {
+    ): Flow<CustomResponse<LoginResponse>> {
         val response = apiHelper.loginPostRequest(grantType, userName, password, clientId)
         response.collect {
-            saveToken(it.data?.access_token!!)
-            saveRefreshToken(it.data.refresh_token)
+            if (it.status == CustomResponse.Status.SUCCESS) {
+                saveToken(it.data?.access_token!!)
+                saveRefreshToken(it.data.refresh_token)
+                getUserInfo()
+            }
         }
-
         return response
     }
 
+    override suspend fun getBadgeMessage() = apiHelper.getBadgeMessage()
 
     override suspend fun logoutCall(
         cellInfoModel: CellInfoModel?,
-    ): Flow<CustomResponse<JsonObject?>> = apiHelper.logoutCall(cellInfoModel)
+    ): Flow<CustomResponse<JsonObject>> = apiHelper.logoutCall(cellInfoModel)
 
+    override suspend fun getUserInfo(): Flow<CustomResponse<UserInfo>> {
+        val response = apiHelper.getUserInfo()
+        response.collect {
+            Sentry.configureScope { scope ->
+                scope.setContexts("GivenName", it.data?.givenName.toString())
+                scope.setContexts("Website", it.data?.website!!)
+            }
+            dataBaseHelper.deleteUsers();
+            dataBaseHelper.insertUsers(it.data!!)
+            setIsLogin(true)
+        }
+        return response
+    }
 
-    override suspend fun getUserInfo() = apiHelper.getUserInfo()
-
-
-    //    region prefrences
-    override fun setIsLogin(isLogin: Boolean): Unit = preferences.setIsLogin(isLogin)!!
-    override fun getIsLogin(): Boolean = preferences.getIsLogin()!!
-    override fun saveToken(token:String): Unit = preferences.setAceesToken(token)!!
-    override fun saveRefreshToken(refreshToken:String): Unit = preferences.setRefreshToken(refreshToken)!!
-
-//    endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    override suspend fun getPermissions(
+        from: Int,
+        size: Int
+    ): Flow<CustomResponse<List<PermissionResponseModel>>> {
+        val result = apiHelper.getPermissions(from, size)
+        (result.collect { insertPermission(it.data!!) })
+        return result
+    }
 
     override suspend fun getAllMessages(
         personelId: Int,
@@ -130,11 +96,32 @@ class UserRepositoryImpl @Inject constructor(
             searchedText
         )
 
+    //    region prefrences
+    override fun setIsLogin(isLogin: Boolean): Unit = preferences.setIsLogin(isLogin)!!
+    override fun getIsLogin(): Boolean = preferences.getIsLogin()!!
+    override fun saveToken(token: String): Unit = preferences.setAceesToken(token)!!
+    override fun saveRefreshToken(refreshToken: String): Unit =
+        preferences.setRefreshToken(refreshToken)!!
+    override fun saveDeviceID(deviceId: String): Unit =
+        preferences.saveDeviceID(deviceId)
+    override fun getDeviceID(deviceId: String): String =
+        preferences.getDeviceID()
 
-    override suspend fun getBadgeMessage() = apiHelper.getBadgeMessage()
+    //    endregion
+//    region database
+    private suspend fun insertPermission(permissions: List<PermissionResponseModel>) {
+        dataBaseHelper.insertPermisions(permissions)
+    }
 
-    override suspend fun getWorkplaces(workplaceType: Int) =
-        apiHelper.getWorkplaces(workplaceType)
+    override fun getUserInfoLocal() = dataBaseHelper.getUsers()
+
+
+//    endregion
+
+
+    override suspend fun removeAll() {
+        baseRepository.removeAllThing()
+    }
 
 
     override suspend fun getAllRequestTypes() = apiHelper.getAllRequestTypes()
@@ -145,10 +132,6 @@ class UserRepositoryImpl @Inject constructor(
 
 
     override suspend fun getProfilePicture() = apiHelper.getProfilePicture()
-
-
-    override suspend fun getPermissions(from: Int, size: Int) =
-        apiHelper.getPermissions(from, size)
 
 
     override suspend fun getportfolioItems(portfolioParamsModel: PortfolioParamsModel) =
@@ -243,10 +226,9 @@ class UserRepositoryImpl @Inject constructor(
         )
 
 
-    override suspend fun checkForUpdate(version: String?, cellInfoModel: CellInfoModel?) =
+    override suspend fun checkForUpdate(version: String?) =
         apiHelper.checkForUpdate(
-            MyEnums.PlatformValue.ANDROID.toString(),
-            cellInfoModel
+            MyEnums.PlatformValue.ANDROID.toString()
         )
 
 

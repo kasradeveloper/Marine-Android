@@ -21,9 +21,9 @@ class SplashActivity :BaseActivity(R.layout.activity_splash){
         splashViewModel.isLogin.observe(this,{
             Handler(Looper.getMainLooper()).postDelayed({
                 if(it){
-                    openActivity(ActivityName.MAINACTIVITY)
+                    openActivity(ActivityName.MAIN)
                 }else{
-                    openActivity(ActivityName.LOGINACTIVITY)
+                    openActivity(ActivityName.LOGIN)
                 }
             }, 1000)
         })

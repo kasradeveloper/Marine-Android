@@ -11,6 +11,7 @@ import com.kasra.atency.data.model.portfolio.PortfolioParamsModel
 import com.kasra.atency.data.model.request.AddRequestParamsModel
 import com.kasra.atency.data.model.ticket.TicketAction
 import com.kasra.atency.data.model.ticket.TicketItem
+import com.kasra.atency.data.model.update.CheckUpdateResponseModel
 import com.kasra.atency.data.model.workplace.WorkplaceModel
 import com.kasra.atency.utility.CustomResponse
 import com.kasra.atency.utility.enums.MyEnums
@@ -34,7 +35,7 @@ class ApiHelperImpl @Inject constructor(private val services: ApiServices) : Api
 
     override suspend fun logoutCall(
         cellInfoModel: CellInfoModel?,
-    ): Flow<CustomResponse<JsonObject?>> = getResult { services.logoutCall(cellInfoModel) }
+    ): Flow<CustomResponse<JsonObject>> = getResult { services.logoutCall(cellInfoModel) }
 
 
     override suspend fun getUserInfo() = getResult { services.getUserInfo() }
@@ -178,7 +179,7 @@ class ApiHelperImpl @Inject constructor(private val services: ApiServices) : Api
             )
         }
 
-    override suspend fun checkForUpdate(version: String?, cellInfoModel: CellInfoModel?) =
+    override suspend fun checkForUpdate(version: String?): Flow<CustomResponse<CheckUpdateResponseModel>> =
         getResult {
             services.checkForUpdate(
                 MyEnums.PlatformValue.ANDROID.toString(),

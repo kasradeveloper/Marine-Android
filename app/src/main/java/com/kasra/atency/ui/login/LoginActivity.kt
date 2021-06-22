@@ -48,9 +48,21 @@ class LoginActivity : BaseActivity(R.layout.activity_login) {
                         )
                     }
                 }
+            }
+        })
+        loginViewModel.workplace.observe(this,{
+            when (it.status) {
+                CustomResponse.Status.FAIL, CustomResponse.Status.ERROR -> {
+                    btn_login.revertAnimation()
+                    it.message?.let { error ->
+                        showErrorMessage(
+                            error
+                        )
+                    }
+                }
                 CustomResponse.Status.SUCCESS -> {
                     btn_login.revertAnimation()
-                    openActivity (ActivityName.MAINACTIVITY)
+                    openActivity (ActivityName.MAIN)
                 }
             }
         })

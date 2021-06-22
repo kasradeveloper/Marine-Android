@@ -1,96 +1,172 @@
 package com.kasra.atency.ui.main
 
-import android.graphics.Bitmap
-import androidx.hilt.lifecycle.ViewModelInject
+import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.os.Build
+import android.telephony.TelephonyManager
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.Target
-import com.kasra.atency.data.repository.UserRepository
-import dagger.hilt.android.scopes.ActivityScoped
+import com.google.gson.JsonObject
+import com.kasra.atency.data.model.Info.CellInfoModel
+import com.kasra.atency.data.model.UserInfo
+import com.kasra.atency.data.model.permission.PermissionResponseModel
+import com.kasra.atency.data.model.update.CheckUpdateResponseModel
+import com.kasra.atency.data.model.workplace.Country
+import com.kasra.atency.data.repository.user.UserRepository
+import com.kasra.atency.utility.ANDROID
+import com.kasra.atency.utility.CustomResponse
+import com.kasra.atency.utility.MyDateConverts
+import com.kasra.atency.utility.getUniquePsuedoID
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.Dispatchers
+import io.sentry.Sentry
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+
 @ViewModelScoped
-class MainViewModel  constructor(
-    private val userRepository: UserRepository
-
+class MainViewModel constructor(
+    private val userRepository: UserRepository,
+    @ApplicationContext val context: Context
 ) : ViewModel() {
-    fun logout() {
-        viewModelScope.launch(Dispatchers.IO) {
-            withContext(Dispatchers.IO) {
+    private val mutablePermissions =
+        MutableLiveData<CustomResponse<List<PermissionResponseModel>>>()
+    val permissions: LiveData<CustomResponse<List<PermissionResponseModel>>> = mutablePermissions
+    private val mutableuserInfo =
+        MutableLiveData<UserInfo>()
+    val userInfo: LiveData<UserInfo> = mutableuserInfo
+    private val mutableBadgeNumber = MutableLiveData<Int>()
+    val badgeNumber: LiveData<Int> = mutableBadgeNumber
+    private val mutableLogout = MutableLiveData<CustomResponse<JsonObject>>()
+    val logout: LiveData<CustomResponse<JsonObject>> = mutableLogout
+    private val mutableCheckUpdate = MutableLiveData<CustomResponse<CheckUpdateResponseModel>>()
+    val checkUpdate: LiveData<CustomResponse<CheckUpdateResponseModel>> = mutableCheckUpdate
+    val mutableupdateCell = MutableLiveData<CustomResponse<JsonObject>>()
+    val updateCell: LiveData<CustomResponse<JsonObject>> = mutableupdateCell
 
+    fun getUserPermission() {
+        viewModelScope.launch {
+            userRepository.getPermissions(0, 100)
+                .collect {
+                    mutablePermissions.postValue(it)
+                }
+        }
+    }
+
+    fun getBadgeMessage() {
+        viewModelScope.launch {
+            userRepository.getBadgeMessage()
+                .collect {
+                    if (it.status == CustomResponse.Status.SUCCESS) {
+                        val jsonObject = JSONObject(it.data.toString())
+                        mutableBadgeNumber.postValue(jsonObject.getString("IValue").toInt())
+                    }
+                }
+        }
+    }
+
+    fun getUserInfo() {
+        viewModelScope.launch {
+            userRepository.getUserInfoLocal().collect {
+                mutableuserInfo.value = it
             }
         }
     }
-//    fun getUserInfoApiCall(profilePictures: CircleImageView?) {
-////        getMvpView().showProgress();
-//        AppDataManager.getInstance(getMvpView().getContext())
-//            .getPersonInfoApiCall(object : Callback<UserInfo?> {
-//                override fun onResponse(call: Call<UserInfo?>, response: Response<UserInfo?>) {
-//                    if (response.isSuccessful()) {
-//                        assert(response.body() != null)
-//                        if (!getPrefrencesPresenter().getImageName()
-//                                .equalsIgnoreCase(response.body().getAddress().getImageName())
-//                        ) {
-//                            getPrefrencesPresenter().saveImageName(
-//                                response.body().getAddress().getImageName()
-//                            )
-//                            setProfilePictures(profilePictures)
-//                        } else {
-//                            Glide.with(getMvpView().getContext().getApplicationContext())
-//                                .asBitmap()
-//                                .load(Commons.StringToBitMap(getPrefrencesPresenter().getImageByte()))
-//                                .dontTransform()
-//                                .centerCrop()
-//                                .placeholder(R.drawable.icon_user)
-//                                .dontAnimate()
-//                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                                .into<Target<Bitmap>>(profilePictures)
-//                        }
-//                        getMvpView().hideProgress()
-//                    } else {
-//                        try {
-//                            val jsonObject = JSONObject(response.errorBody().toString())
-//                            getMvpView().hideProgress()
-//                            getMvpView().showErrorMessage(jsonObject["Message"] as String)
-//                            //                        Glide.with(getMvpView().getContext())
-////                                .asBitmap()
-////                                .load(Commons.StringToBitMap(getPrefrencesPresenter().getImageByte()))
-////                                .dontTransform()
-////                                .placeholder(R.drawable.icon_user)
-////                                .dontAnimate()
-////                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-////                                .into(profilePictures);
-//                        } catch (e: JSONException) {
-//                            Sentry.captureException(e)
-//                            getMvpView().hideProgress()
-//                        }
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<UserInfo?>, t: Throwable) {
-//                    getMvpView().hideProgress()
-//                    getMvpView().showErrorMessage(
-//                        getMvpView().getContext().getResources().getString(R.string.msg_error)
-//                    )
-//                    Glide.with(getMvpView().getContext().getApplicationContext())
-//                        .asBitmap()
-//                        .load(Commons.StringToBitMap(getPrefrencesPresenter().getImageByte()))
-//                        .dontTransform()
-//                        .placeholder(R.drawable.icon_user)
-//                        .dontAnimate()
-//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                        .into<Target<Bitmap>>(profilePictures)
-//                }
-//            })
-//    }
+
+    fun logoutHandler() {
+        viewModelScope.launch {
+            val cellInfoModel = CellInfoModel()
+            cellInfoModel.isActive = false
+            var pInfo: PackageInfo? = null
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+            val currentLocalTime = calendar.time
+            val date: DateFormat = SimpleDateFormat("z", Locale.getDefault())
+            val localtime = date.format(currentLocalTime)
+            try {
+                pInfo = context.packageManager
+                    .getPackageInfo(context.packageName, 0)
+            } catch (e: PackageManager.NameNotFoundException) {
+                Sentry.captureException(e)
+            }
+            var version: String? = null
+            if (pInfo != null) {
+                version = pInfo.versionName
+            }
+            cellInfoModel.appVersion = version
+            cellInfoModel.brand = Build.MODEL
+            val telephonyManager: TelephonyManager =
+                context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            cellInfoModel.country = Country(telephonyManager.simCountryIso)
+            cellInfoModel.iMEI = getUniquePsuedoID()
+            cellInfoModel.date = MyDateConverts.convertDateToString(Date())
+            cellInfoModel.operationSystem = ANDROID
+            cellInfoModel.operationSystemVersion = Build.VERSION.RELEASE
+            cellInfoModel.timezone = localtime
+            userRepository.logoutCall(cellInfoModel)
+                .collect {
+                    userRepository.removeAll()
+                }
+        }
+    }
+
+    fun checkUpdate() {
+        var version = "0"
+        val pInfo = context.packageManager
+            .getPackageInfo(context.packageName, 0)
+        version = pInfo.versionName
+        viewModelScope.launch {
+            userRepository.checkForUpdate(version)
+                .collect {
+                    mutableCheckUpdate.postValue(it)
+                }
+        }
+    }
+
+    fun updateCellInfo(token: String) {
+        val cellInfoModel = CellInfoModel()
+        var pInfo: PackageInfo? = null
+        try {
+            pInfo = context.packageManager
+                .getPackageInfo(context.packageName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            Sentry.captureException(e)
+        }
+        var version: String? = null
+        if (pInfo != null) {
+            version = pInfo.versionName
+        }
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        val currentLocalTime = calendar.time
+        val date: DateFormat = SimpleDateFormat("z", Locale.getDefault())
+        val localtime = date.format(currentLocalTime)
+
+        cellInfoModel.isActive = true
+        cellInfoModel.appVersion = version
+        cellInfoModel.brand = Build.MODEL
+        val telephonyManager =
+            context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        cellInfoModel.country = Country(telephonyManager.simCountryIso)
+        cellInfoModel.iMEI = getUniquePsuedoID()
+        cellInfoModel.date = MyDateConverts.convertDateToString(Date())
+        cellInfoModel.operationSystem = "Android"
+        cellInfoModel.operationSystemVersion = Build.VERSION.RELEASE
+        cellInfoModel.timezone = localtime
+        userRepository.saveDeviceID(getUniquePsuedoID())
+        cellInfoModel.pushId=token
+        viewModelScope.launch {
+            userRepository.updateCellInfo(cellInfoModel)
+                .collect {
+                    mutableupdateCell.postValue(it)
+                }
+        }
+
+    }
+
 }
 

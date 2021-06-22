@@ -55,7 +55,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/nav_device_id"
-               android:fontFamily="@font/font_light"
+                android:fontFamily="@font/font_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

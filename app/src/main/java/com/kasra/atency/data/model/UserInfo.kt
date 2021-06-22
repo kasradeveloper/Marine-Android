@@ -1,5 +1,6 @@
 package com.kasra.atency.data.model
 
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
@@ -7,10 +8,12 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "user_info")
 class UserInfo (
+
     @PrimaryKey
     @SerializedName("sub")
     @Expose
-    var sub: String? = null,
+    @NonNull
+    var sub: String,
 
     @SerializedName("address")
     @Expose

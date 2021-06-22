@@ -50,11 +50,14 @@ class AppPrefrencesImpl @Inject constructor(@ApplicationContext context: Context
 
     override fun clearAllThing() {
         mprefs?.edit()?.clear()?.apply()
-
-
-
+    }
+    override fun getDeviceID(): String {
+        return mprefs?.getString("DeviceID", "").toString()
     }
 
+    override fun saveDeviceID(deviceID: String?) {
+        mprefs?.edit()?.putString("DeviceID", deviceID)?.apply()
+    }
 
 
 }

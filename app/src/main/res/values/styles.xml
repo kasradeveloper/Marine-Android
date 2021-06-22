@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="pinViewStyle">@style/PinWidget.PinView</item>
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="android:fontFamily">@font/font_regular</item>
 
     </style>
 
@@ -31,5 +32,11 @@
     <style name="MyBase.TimePicker" parent="Theme.AppCompat.Light.Dialog">
 
         <item name="android:fontFamily">@font/font_light</item>
+    </style>
+    <style name="DialogStyle" parent="Theme.AppCompat.Light">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
     </style>
 </resources>

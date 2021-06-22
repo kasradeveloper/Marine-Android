@@ -11,8 +11,17 @@ import androidx.core.content.ContextCompat
 import com.example.bilerplatemvvm.R
 import com.kasra.atency.ui.login.LoginActivity
 import com.kasra.atency.ui.main.MainActivity
+import com.kasra.atency.ui.modules.duty.DutyFragment
+import com.kasra.atency.ui.modules.home.HomeFragment
+import com.kasra.atency.ui.modules.message.MessageFragment
+import com.kasra.atency.ui.modules.performance.PerformanceFragment
+import com.kasra.atency.ui.modules.portfolio.PortfolioFragment
+import com.kasra.atency.ui.modules.request.RequestFragment
+import com.kasra.atency.ui.modules.subordinate.SubordinateFragment
+import com.kasra.atency.ui.modules.ticket.TicketFragment
 import com.kasra.atency.utility.MyContextWrapper
 import com.kasra.atency.utility.enums.ActivityName
+import com.kasra.atency.utility.enums.FragmentName
 import com.muddzdev.styleabletoastlibrary.StyleableToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -60,16 +69,28 @@ abstract class BaseActivity(contentLayoutId: Int) : AppCompatActivity(contentLay
     }
     fun openActivity(activityName:ActivityName,bundle: Bundle?=null){
         when(activityName){
-            ActivityName.MAINACTIVITY->{
+            ActivityName.MAIN->{
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-            ActivityName.LOGINACTIVITY->{
+            ActivityName.LOGIN ->{
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }
+        }
+    }
+    fun showNextFragment(fragmentName:FragmentName,bundle: Bundle?=null,layout:Int){
+        when (fragmentName){
+            FragmentName.HOME->supportFragmentManager.beginTransaction().add(layout, HomeFragment(), "home_fragment").commitAllowingStateLoss()
+            FragmentName.PERFORMANCE->supportFragmentManager.beginTransaction().add(layout, PerformanceFragment(), "performance_fragment").commitAllowingStateLoss()
+            FragmentName.SUBORDINATE->supportFragmentManager.beginTransaction().add(layout, SubordinateFragment(), "subordinate_fragment").commitAllowingStateLoss()
+            FragmentName.REQUEST->supportFragmentManager.beginTransaction().add(layout, RequestFragment(), "request_fragment").commitAllowingStateLoss()
+            FragmentName.PORTFOLIO->supportFragmentManager.beginTransaction().add(layout, PortfolioFragment(), "portfolio_fragment").commitAllowingStateLoss()
+            FragmentName.MESSAGER->supportFragmentManager.beginTransaction().add(layout, MessageFragment(), "message_fragment").commitAllowingStateLoss()
+            FragmentName.TICKET->supportFragmentManager.beginTransaction().add(layout, TicketFragment(), "ticket_fragment").commitAllowingStateLoss()
+            FragmentName.DUTY->supportFragmentManager.beginTransaction().add(layout, DutyFragment(), "duty_fragment").commitAllowingStateLoss()
         }
     }
 
