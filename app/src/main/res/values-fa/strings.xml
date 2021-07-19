@@ -58,6 +58,7 @@
     <string name="month">ماه</string>
     <string name="year">سال</string>
     <string name="show_no_performance">برای شما کارکردی وجود ندارد</string>
+    <string name="your_location_is_off">موقعیت مکانی گوشی شما خاموش است.</string>
 
     <string name="precense">حضور</string>
     <string name="on_duty_presence">حضور موظفی</string>

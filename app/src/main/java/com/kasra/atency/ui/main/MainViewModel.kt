@@ -20,8 +20,8 @@ import com.kasra.atency.utility.ANDROID
 import com.kasra.atency.utility.CustomResponse
 import com.kasra.atency.utility.MyDateConverts
 import com.kasra.atency.utility.getUniquePsuedoID
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import io.sentry.Sentry
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -29,9 +29,10 @@ import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-@ViewModelScoped
-class MainViewModel constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val userRepository: UserRepository,
     @ApplicationContext val context: Context
 ) : ViewModel() {
@@ -60,6 +61,7 @@ class MainViewModel constructor(
     }
 
     fun getBadgeMessage() {
+
         viewModelScope.launch {
             userRepository.getBadgeMessage()
                 .collect {

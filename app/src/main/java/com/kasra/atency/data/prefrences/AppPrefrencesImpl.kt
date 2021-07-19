@@ -58,6 +58,12 @@ class AppPrefrencesImpl @Inject constructor(@ApplicationContext context: Context
     override fun saveDeviceID(deviceID: String?) {
         mprefs?.edit()?.putString("DeviceID", deviceID)?.apply()
     }
+    override fun saveWebSite(webSite: String?) {
+        mprefs?.edit()?.putString("website", webSite)?.apply()
+    }
 
+    override fun getWebSite(): String? {
+        return mprefs?.getString("website", "")
+    }
 
 }

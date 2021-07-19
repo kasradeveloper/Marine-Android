@@ -46,6 +46,7 @@ class ApplicationModule {
     }
     @Provides
     @Singleton
+
     fun provideRetrofit(okHttpClient: OkHttpClient,baseUrl:String):Retrofit=
         Retrofit.Builder()
             .client(okHttpClient)

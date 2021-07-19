@@ -67,8 +67,9 @@ class UserRepositoryImpl @Inject constructor(
                 scope.setContexts("GivenName", it.data?.givenName.toString())
                 scope.setContexts("Website", it.data?.website!!)
             }
+            preferences.saveWebSite(it.data?.website!!)
             dataBaseHelper.deleteUsers();
-            dataBaseHelper.insertUsers(it.data!!)
+            dataBaseHelper.insertUsers(it.data)
             setIsLogin(true)
         }
         return response

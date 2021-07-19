@@ -29,6 +29,7 @@
     <!--ICON FONTS-->
     <!--MENU-->
     <string name="drawer_home" >Register Attendance</string>
+
     <string name="drawer_performance" >Performance Audit</string>
     <string name="nav_portfolio" >portfolio</string>
     <string name="nav_outdoor_duty_places" >Out Door Duty Places</string>
@@ -134,6 +135,7 @@
     <string name="att_type_name_exit">Exit</string>
     <string name="attendance">Attendance</string>
     <string name="all">All</string>
+    <string name="your_location_is_off">Your phone\'s location is off.</string>
 
     <string name="txt_all_personnels">All Personnel</string>
     <string name="error_manage_permission">You do not have permission to manage requests.</string>

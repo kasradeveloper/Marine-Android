@@ -163,7 +163,7 @@ class MainActivity : BaseActivity(R.layout.activity_main),
         val deviceID: String = getUniquePsuedoID()
         val showdeviceID = deviceID.substring(deviceID.length - 10, deviceID.length - 1)
         nav_view.nav_device_id.text = "DeviceID : " + java.lang.String.format(
-            "%1\$s-%2\$s-%3\$s",
+            "%1\$s",
             showdeviceID
         )
     }
@@ -256,19 +256,19 @@ class MainActivity : BaseActivity(R.layout.activity_main),
     }
 
     private fun handleSubordinateItems(hasSubordinatePermission: Boolean) {
-        if (hasSubordinatePermission) {
-            onNavigationItemSelected(nav_view.menu.getItem(1))
-            nav_view.setCheckedItem(R.id.nav_subperson)
-            val menu: Menu = nav_view.menu
-            menu.findItem(R.id.nav_performance).isVisible = false
-            menu.findItem(R.id.nav_subperson).isVisible = true
-        } else {
+//        if (hasSubordinatePermission) {
+//            onNavigationItemSelected(nav_view.menu.getItem(1))
+//            nav_view.setCheckedItem(R.id.nav_subperson)
+//            val menu: Menu = nav_view.menu
+//            menu.findItem(R.id.nav_performance).isVisible = false
+//            menu.findItem(R.id.nav_subperson).isVisible = true
+//        } else {
             onNavigationItemSelected(nav_view.menu.getItem(0))
             nav_view.setCheckedItem(R.id.nav_home)
             val menu: Menu = nav_view.menu
             menu.findItem(R.id.nav_performance).isVisible = true
             menu.findItem(R.id.nav_subperson).isVisible = false
-        }
+//        }
     }
 
     private fun checkPermission(permissions: List<PermissionResponseModel>) {

@@ -12,4 +12,6 @@ interface AppPrefrencesHelper {
     fun getInquiryId(): String?
     fun getDeviceID(): String
     fun saveDeviceID(deviceID: String?)
+    fun saveWebSite(webSite: String?)
+    fun getWebSite(): String?
 }
