@@ -28,10 +28,10 @@ import com.kasra.atency.data.model.permission.PermissionResponseModel
 import com.kasra.atency.data.model.update.CheckUpdateResponseModel
 import com.kasra.atency.ui.base.BaseActivity
 import com.kasra.atency.ui.modules.duty.DutyFragment
-import com.kasra.atency.ui.modules.home.HomeFragment
 import com.kasra.atency.ui.modules.message.MessageFragment
 import com.kasra.atency.ui.modules.performance.PerformanceFragment
 import com.kasra.atency.ui.modules.portfolio.PortfolioFragment
+import com.kasra.atency.ui.modules.register_att.RegisterAttendanceFragment
 import com.kasra.atency.ui.modules.request.RequestFragment
 import com.kasra.atency.ui.modules.subordinate.SubordinateFragment
 import com.kasra.atency.ui.modules.ticket.TicketFragment
@@ -68,9 +68,8 @@ class MainActivity : BaseActivity(R.layout.activity_main),
 
     override fun observeItems() {
         mainViewModel.permissions.observe(this, {
-            if (it.status == CustomResponse.Status.SUCCESS) {
-                checkPermission(it.data!!)
-            }
+                checkPermission(it)
+
         })
         mainViewModel.badgeNumber.observe(this, {
             createBadge(it)
@@ -221,9 +220,9 @@ class MainActivity : BaseActivity(R.layout.activity_main),
                     hideOtherFragment("subordinate_fragment")
             }
             R.id.nav_home -> {
-                val home: HomeFragment? =
-                    supportFragmentManager.findFragmentByTag("home_fragment") as HomeFragment?
-                if (home == null)
+                val registerAttendance: RegisterAttendanceFragment? =
+                    supportFragmentManager.findFragmentByTag("home_fragment") as RegisterAttendanceFragment?
+                if (registerAttendance == null)
                     showNextFragment(FragmentName.HOME, layout = R.id.rootLayout)
                 else
                     hideOtherFragment("home_fragment")
@@ -256,19 +255,19 @@ class MainActivity : BaseActivity(R.layout.activity_main),
     }
 
     private fun handleSubordinateItems(hasSubordinatePermission: Boolean) {
-//        if (hasSubordinatePermission) {
-//            onNavigationItemSelected(nav_view.menu.getItem(1))
-//            nav_view.setCheckedItem(R.id.nav_subperson)
-//            val menu: Menu = nav_view.menu
-//            menu.findItem(R.id.nav_performance).isVisible = false
-//            menu.findItem(R.id.nav_subperson).isVisible = true
-//        } else {
+        if (hasSubordinatePermission) {
+            onNavigationItemSelected(nav_view.menu.getItem(1))
+            nav_view.setCheckedItem(R.id.nav_subperson)
+            val menu: Menu = nav_view.menu
+            menu.findItem(R.id.nav_performance).isVisible = false
+            menu.findItem(R.id.nav_subperson).isVisible = true
+        } else {
             onNavigationItemSelected(nav_view.menu.getItem(0))
             nav_view.setCheckedItem(R.id.nav_home)
             val menu: Menu = nav_view.menu
             menu.findItem(R.id.nav_performance).isVisible = true
             menu.findItem(R.id.nav_subperson).isVisible = false
-//        }
+        }
     }
 
     private fun checkPermission(permissions: List<PermissionResponseModel>) {

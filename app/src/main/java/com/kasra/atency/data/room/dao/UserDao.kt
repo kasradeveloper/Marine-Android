@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
     //------------------------------------SELECT
     @Query("SELECT * FROM  user_info ")
-    fun getUserInfo(): Flow<UserInfo?>
+    fun getUserInfo(): Flow<UserInfo>
 
     @Query("SELECT * FROM  permission ")
-    fun getPermissionModel(): Flow<List<PermissionResponseModel>?>
+    fun getPermissionModel(): Flow<List<PermissionResponseModel>>
 
     //------------------------------------INSERT
     @Insert(onConflict = OnConflictStrategy.REPLACE)

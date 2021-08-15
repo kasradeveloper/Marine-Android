@@ -1,4 +1,7 @@
 package com.kasra.atency.ui.modules.subordinate
 
-class SubordinateViewModel {
+import com.kasra.atency.ui.base.BaseViewModel
+
+class SubordinateViewModel:BaseViewModel() {
+
 }

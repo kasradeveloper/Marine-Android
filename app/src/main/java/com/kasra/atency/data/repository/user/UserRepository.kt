@@ -61,7 +61,7 @@ interface UserRepository {
     suspend fun getPermissions(
         from: Int,
         size: Int
-    ): Flow<CustomResponse<List<PermissionResponseModel>>>
+    ): Flow<List<PermissionResponseModel>>
 
     suspend fun getportfolioItems(portfolioParamsModel: PortfolioParamsModel): Flow<CustomResponse<List<PortfolioResponseModel>>>
     suspend fun getWorkPeriod(fromDate: String?): Flow<CustomResponse<GetAllWorkperiods>>
@@ -130,4 +130,5 @@ interface UserRepository {
     suspend fun removeAll()
     fun saveDeviceID(deviceId: String)
     fun getDeviceID(deviceId: String): String
+    fun getPermissionLocal(): Flow<List<PermissionResponseModel>?>
 }

@@ -37,8 +37,8 @@ class MainViewModel @Inject constructor(
     @ApplicationContext val context: Context
 ) : ViewModel() {
     private val mutablePermissions =
-        MutableLiveData<CustomResponse<List<PermissionResponseModel>>>()
-    val permissions: LiveData<CustomResponse<List<PermissionResponseModel>>> = mutablePermissions
+        MutableLiveData<List<PermissionResponseModel>>()
+    val permissions: LiveData<List<PermissionResponseModel>> = mutablePermissions
     private val mutableuserInfo =
         MutableLiveData<UserInfo>()
     val userInfo: LiveData<UserInfo> = mutableuserInfo
@@ -59,9 +59,7 @@ class MainViewModel @Inject constructor(
                 }
         }
     }
-
     fun getBadgeMessage() {
-
         viewModelScope.launch {
             userRepository.getBadgeMessage()
                 .collect {

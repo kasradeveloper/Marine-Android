@@ -78,11 +78,15 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getPermissions(
         from: Int,
         size: Int
-    ): Flow<CustomResponse<List<PermissionResponseModel>>> {
+    ): Flow<List<PermissionResponseModel>> {
         val result = apiHelper.getPermissions(from, size)
-        (result.collect { insertPermission(it.data!!) })
-        return result
+        (result.collect {
+            if (it.status == CustomResponse.Status.SUCCESS)
+                insertPermission(it.data!!)
+        })
+        return getPermissionLocal()
     }
+//    override fun getSubordinates()=
 
     override suspend fun getAllMessages(
         personelId: Int,
@@ -103,8 +107,10 @@ class UserRepositoryImpl @Inject constructor(
     override fun saveToken(token: String): Unit = preferences.setAceesToken(token)!!
     override fun saveRefreshToken(refreshToken: String): Unit =
         preferences.setRefreshToken(refreshToken)!!
+
     override fun saveDeviceID(deviceId: String): Unit =
         preferences.saveDeviceID(deviceId)
+
     override fun getDeviceID(deviceId: String): String =
         preferences.getDeviceID()
 
@@ -113,6 +119,9 @@ class UserRepositoryImpl @Inject constructor(
     private suspend fun insertPermission(permissions: List<PermissionResponseModel>) {
         dataBaseHelper.insertPermisions(permissions)
     }
+
+    override fun getPermissionLocal() = dataBaseHelper.getPermisssions()
+
 
     override fun getUserInfoLocal() = dataBaseHelper.getUsers()
 

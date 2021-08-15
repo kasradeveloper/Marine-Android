@@ -12,7 +12,7 @@ import com.example.bilerplatemvvm.R
 import com.kasra.atency.ui.login.LoginActivity
 import com.kasra.atency.ui.main.MainActivity
 import com.kasra.atency.ui.modules.duty.DutyFragment
-import com.kasra.atency.ui.modules.home.HomeFragment
+import com.kasra.atency.ui.modules.register_att.RegisterAttendanceFragment
 import com.kasra.atency.ui.modules.message.MessageFragment
 import com.kasra.atency.ui.modules.performance.PerformanceFragment
 import com.kasra.atency.ui.modules.portfolio.PortfolioFragment
@@ -83,7 +83,7 @@ abstract class BaseActivity(contentLayoutId: Int) : AppCompatActivity(contentLay
     }
     fun showNextFragment(fragmentName:FragmentName,bundle: Bundle?=null,layout:Int){
         when (fragmentName){
-            FragmentName.HOME->supportFragmentManager.beginTransaction().add(layout, HomeFragment(), "home_fragment").commitAllowingStateLoss()
+            FragmentName.HOME->supportFragmentManager.beginTransaction().add(layout, RegisterAttendanceFragment(), "home_fragment").commitAllowingStateLoss()
             FragmentName.PERFORMANCE->supportFragmentManager.beginTransaction().add(layout, PerformanceFragment(), "performance_fragment").commitAllowingStateLoss()
             FragmentName.SUBORDINATE->supportFragmentManager.beginTransaction().add(layout, SubordinateFragment(), "subordinate_fragment").commitAllowingStateLoss()
             FragmentName.REQUEST->supportFragmentManager.beginTransaction().add(layout, RequestFragment(), "request_fragment").commitAllowingStateLoss()

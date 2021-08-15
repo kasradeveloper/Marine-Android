@@ -11,7 +11,7 @@ interface DataBaseHelper {
     fun getUsers(): Flow<UserInfo?>
     suspend fun insertUsers(userInfo: UserInfo)
     suspend fun deleteUsers()
-    fun getPermisssions(): Flow<List<PermissionResponseModel>?>
+    fun getPermisssions(): Flow<List<PermissionResponseModel>>
     suspend fun insertPermisions(permissions: List<PermissionResponseModel>)
     suspend fun deletePermissions()
     suspend fun deleteAllThing()

@@ -12,7 +12,7 @@ class DataBaseImpl @Inject constructor(private val applicationDB: ApplicationDB)
     override suspend fun insertUsers(userInfo: UserInfo) =
         applicationDB.userDao().insertUserInfo(userInfo)
     override suspend fun deleteUsers() = applicationDB.userDao().deleteUserInfo()
-    override fun getPermisssions(): Flow<List<PermissionResponseModel>?> = applicationDB.userDao().getPermissionModel()
+    override fun getPermisssions(): Flow<List<PermissionResponseModel>> = applicationDB.userDao().getPermissionModel()
     override suspend fun insertPermisions(permissions:List<PermissionResponseModel>) =
         applicationDB.userDao().insertPermission(permissions)
     override suspend fun deletePermissions() = applicationDB.userDao().deletePermission()

@@ -1,4 +1,4 @@
-package com.kasra.atency.ui.modules.home
+package com.kasra.atency.ui.modules.register_att
 
 import android.graphics.LinearGradient
 import android.graphics.Shader
@@ -19,7 +19,7 @@ import io.sentry.Sentry
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
-class HomeFragment:BaseFragment(R.layout.fragment_home) {
+class RegisterAttendanceFragment:BaseFragment(R.layout.fragment_home) {
     lateinit var paintDrawble: PaintDrawable
     lateinit var shaderFactory : ShaderFactory
     var seekBarEnable = true

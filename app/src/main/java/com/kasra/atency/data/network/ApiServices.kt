@@ -110,7 +110,6 @@ interface ApiServices {
 
     @GET("api/PersonnelAPI/GetSubordinates")
     suspend fun getSubPerson(
-
         @Query("from") from: Int,
         @Query("size") size: Int
     ): Response<List<SubPersonResponseModel>>

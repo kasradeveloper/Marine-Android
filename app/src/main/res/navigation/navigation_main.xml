@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.kasra.atency.ui.modules.home.HomeFragment"
+        android:name="com.kasra.atency.ui.modules.register_att.RegisterAttendanceFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_mainActivity2"
