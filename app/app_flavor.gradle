@@ -41,13 +41,13 @@ android {
     productFlavors {
         develop {
             dimension "develop"
-            resValue "string", "app_name", "Atency DEBUG"
+            resValue "string", "app_name", "Marine"
             buildConfigField("String", "db_name", "\"AtencyDebug\"")
             buildConfigField("int", "DB_SCHEMA_VERSION", "13")
-            buildConfigField("String", "BASE_URL","\"https://atencytest.ir\"")
+            buildConfigField("String", "BASE_URL","\"http://192.168.50.66/lego.web/\"")
         }
         production {
-            resValue "string", "app_name", "Atency"
+            resValue "string", "app_name", "Marine"
             buildConfigField("String", "db_name", "\"Atency\"")
             buildConfigField("int", "DB_SCHEMA_VERSION", "13")
             buildConfigField("String", "BASE_URL","\"https://atency.com\"")

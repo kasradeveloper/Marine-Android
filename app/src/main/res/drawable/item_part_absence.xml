@@ -1,6 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colorDangerLight" />
-    <corners
-        android:bottomRightRadius="5dp"
-        android:topRightRadius="5dp"/>
-</shape>

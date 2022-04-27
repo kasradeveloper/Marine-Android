@@ -1,2 +1,3 @@
 include ':app',':persiandatepicker'
 rootProject.name = "atency_kotlin"
+include ':marineWebView'
