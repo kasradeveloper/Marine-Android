@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <attr format="reference" name="numberPickerTheme"/>
+    <color name="colorAccent">#AAAAAA</color>
+    <color name="colorButtonTxtColor">#17172C</color>
+    <color name="colorComponentBg">#18202B</color>
+    <color name="colorComponentOpacity">#8F212D3E</color>
+    <color name="colorGreen">#183530</color>
+    <color name="colorGreenToast">#39C057</color>
+    <color name="colorPrimary">#030C18</color>
+    <color name="colorPrimaryDark">#030C18</color>
+    <color name="colorPurple">#5E5CE6</color>
+    <color name="colorPurpleOpacity">#1D5E5CE6</color>
+    <color name="colorRed">#53292E</color>
+    <color name="colorRedToast">#F15E60</color>
+    <color name="colorSeekBar">#2D3541</color>
+    <color name="colorToolbar">#6F18202B</color>
+    <color name="colorTxtGray">#81858B</color>
+    <color name="colorTxtHint">#C1C1C1</color>
+    <color name="colorwhite">#ffffff</color>
+    <string name="app_name">PersianDatePicker</string>
+    <style name="DefaultNumberPickerTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="android:textSize">17sp</item> // add if you want to change size
+        <item name="android:textColorPrimary">@color/colorwhite</item>
+        <item name="android:fontFamily" ns1:targetApi="jelly_bean">@font/dana_fa_medium</item> // add font (this font folder is present in res folder)
+
+    </style>
+    <declare-styleable name="PersianDatePicker">
+        <attr format="integer" name="minYear"/>
+        <attr format="integer" name="maxYear"/>
+        <attr format="integer" name="selectedYear"/>
+        <attr format="integer" name="selectedMonth"/>
+        <attr format="integer" name="selectedDay"/>
+        <attr format="boolean" name="displayMonthNames"/>
+        <attr format="integer" name="yearRange"/>
+        <attr format="boolean" name="displayDescription"/>
+    </declare-styleable>
+</resources>

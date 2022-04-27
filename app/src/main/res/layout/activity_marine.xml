@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="submit"
+        android:layout_gravity="center|bottom"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/web_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,4 +31,4 @@
         app:layout_constraintVertical_bias="0.9"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
