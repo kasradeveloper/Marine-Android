@@ -4,15 +4,6 @@ plugins {
     id 'maven-publish'
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.kasra.marine'
-            artifactId = 'library'
-            version = '1.1'
-        }
-    }
-}
 
 android {
     compileSdkVersion 31
@@ -57,8 +48,7 @@ afterEvaluate {
         publications{
             release(MavenPublication){
                 from components.release
-
-                groupId = 'com.github.raanayavari'
+                groupId = 'com.github.kasradeveloper'
                 artifactId = 'marineWebView'
                 version = '1.0'
             }
