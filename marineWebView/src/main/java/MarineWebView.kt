@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MarineWebView : WebView {
 
     lateinit var onPageFinish: ((WebView, String) -> Unit)
+
     private lateinit var appCompatActivity: AppCompatActivity
     private lateinit var loadUrl: String
 
@@ -24,12 +25,16 @@ class MarineWebView : WebView {
         defStyleAttr
     )
 
-
     @SuppressLint("SetJavaScriptEnabled")
-    fun initWebView(appCompatActivity: AppCompatActivity, loadUrl: String) {
+    fun initWebView(
+        appCompatActivity: AppCompatActivity,
+        loadUrl: String,
+        onReciveData: ((String?) -> Unit)? = null
+    ) {
         this.appCompatActivity = appCompatActivity
         this.loadUrl = loadUrl
         val webView = this
+        setWebContentsDebuggingEnabled(true)
         val webSettings = webView.settings
         webSettings.javaScriptEnabled = true
         webSettings.loadWithOverviewMode = true
@@ -38,12 +43,11 @@ class MarineWebView : WebView {
             onPageFinish(view, url)
         })
         webView.webChromeClient = MyChromClient(context, appCompatActivity)
-        webView.addJavascriptInterface(JavaScriptInterface(context), "AndroidFunction")
-        if (Build.VERSION.SDK_INT >= 19) {
-            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        } else if (Build.VERSION.SDK_INT < 19) {
-            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-        }
+        webView.addJavascriptInterface(
+            JavaScriptInterface(onReciveData),
+            "AndroidFunction"
+        )
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webView.loadUrl(loadUrl)
     }
 
