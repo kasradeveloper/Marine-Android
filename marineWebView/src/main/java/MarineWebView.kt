@@ -51,4 +51,8 @@ class MarineWebView : WebView {
         webView.loadUrl(loadUrl)
     }
 
+    fun callJsFunction(functionName: String, values: List<String> = arrayListOf()) {
+        val functionValues = values.joinToString(",")
+        loadUrl("javascript:($functionName($functionValues))")
+    }
 }

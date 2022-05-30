@@ -21,6 +21,13 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        maven {
+            url 'https://tfs.kasraco.ir/tfs/DefaultCollection/_packaging/Android/maven/v1'
+            credentials {
+                username "VSTS"
+                password System.getenv("VSTS_ENV_ACCESS_TOKEN") ?: "${vstsGradleAccessToken}"
+            }
+        }
     }
 }
 
