@@ -8,9 +8,6 @@ pluginManagement {
         maven {
             url 'https://maven.fabric.io/public'
         }
-        maven{
-            url "https://dl.bintray.com/infideap2/Drawer-Behavior"
-        }
     }
 }
 dependencyResolutionManagement {
