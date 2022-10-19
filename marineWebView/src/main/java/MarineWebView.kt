@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.webkit.WebView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 
 class MarineWebView : WebView {
@@ -18,12 +19,6 @@ class MarineWebView : WebView {
     constructor(context: Context) : super(context)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
 
     @SuppressLint("SetJavaScriptEnabled")
     fun initWebView(
@@ -39,6 +34,7 @@ class MarineWebView : WebView {
         webSettings.javaScriptEnabled = true
         webSettings.loadWithOverviewMode = true
         webSettings.allowFileAccess = true
+
         webView.webViewClient = MyClient(onPageFinish = { view, url ->
             onPageFinish(view, url)
         })

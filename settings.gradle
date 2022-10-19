@@ -1,3 +1,29 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+        maven{
+            url "https://dl.bintray.com/infideap2/Drawer-Behavior"
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven { url "https://maven.google.com" }
+        google()
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
 include ':app',':persiandatepicker'
 rootProject.name = "Marine-Android"
 include ':marineWebView'

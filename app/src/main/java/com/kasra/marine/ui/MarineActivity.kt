@@ -1,13 +1,18 @@
 package com.kasra.marine.ui
 
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
-import com.example.bilerplatemvvm.R
-import android.util.Log
 import android.webkit.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.example.bilerplatemvvm.R
 import com.kasra.marine.ui.marine.MarineWebView
+import com.yariksoffice.lingver.Lingver
+import java.util.*
 
 class MarineActivity : AppCompatActivity() {
     private lateinit var webView: MarineWebView
@@ -15,16 +20,40 @@ class MarineActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLocale(Locale("fa"))
         setContentView(R.layout.activity_marine)
         initView()
+    }
+    private fun setLocale(locale: Locale?) {
+        var context: Context = applicationContext
+        val resources: Resources = context.resources
+        val configuration: Configuration = resources.configuration
+        Locale.setDefault(locale)
+        configuration.setLocale(locale)
+        if (Build.VERSION.SDK_INT >= 25) {
+            context = context.applicationContext.createConfigurationContext(configuration)
+            context = context.createConfigurationContext(configuration)
+        }
+        context.resources.updateConfiguration(
+            /* config = */ configuration,
+            /* metrics = */ resources.getDisplayMetrics()
+        )
     }
 
     private fun initView() {
         webView = findViewById(R.id.web_view)
-        webView.initWebView(this, "http://192.168.50.141:3000")
+        val button = findViewById<AppCompatButton>(R.id.submit).apply {
+            setOnClickListener {
+                run {
+
+                    Toast.makeText(context,Locale.getDefault().toString(),Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        webView.initWebView(this, "http://192.168.0.60:8070/lego.web/Marine/FormMobile/Home?module=Avid")
         webView.onPageFinish = { _, s ->
             webView.callJsFunction("setAuthorization", arrayListOf("'bearer SU7lHYwIRU14jaKQgW9T2A71CHl1YZuo1laxZ_iUxTgmjFsae9KD2wMbgLd2HU8BOehHRM1OZfGuTRC7uceBayxEwzBirtt2QEQujQ8Xpqm2jbnlmmx6ISkyG3F9mptBeCMyVKxtfV7EqrSJndEm9_OBMnpE9kiszOwW2KE2okNgeO1aoFtrjegXrFeeEgVRhmszxFUKPXPwyzfkJ2mesW-oHioOUEKS5jt_ihSnwZrHnmhGHaGni7A8vyY3aNZLrkwCU_MO0NU4_WZLVu0Nb92JS8IaVdTe5-C0zmzVIYvrFnIPtdqPSm9gSAyq9XSRit3y-kmomWSdXWptcxEFNaw0TRJ3ewh1q7FJagw-GyaZXswL6j34NNEjR2lnIcSmRFVl3H44XyULixksK2gmCJx-oPSUizNBUdQNXr_jCilhMOBjjlsfmKSzhVX_sJDGy8dx_vV4FjB8hMIoSLIbjQoEnVY5ubX8Cb0rUWyKtbayn320fcpEK8nSNOClU2oY'"))
-            webView.callJsFunction("setFormSchema", arrayListOf("{\n" +
+            webView.callJsFunction("setFormSchema_mobile", arrayListOf("{\n" +
                     "  \"form\": {\n" +
                     "    \"labelCol\": 6,\n" +
                     "    \"wrapperCol\": 12,\n" +
@@ -185,4 +214,7 @@ class MarineActivity : AppCompatActivity() {
                     "}"))
         }
     }
+
+
+
 }

@@ -1,5 +1,5 @@
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
     defaultConfig {
         buildConfigField "String",  "HTTPS","\"https://\""
         buildConfigField "String",  "HTTP", "\"http://\""

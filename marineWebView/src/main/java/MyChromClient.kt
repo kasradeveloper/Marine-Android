@@ -12,12 +12,13 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MyChromClient(private val context: Context,private val activity: AppCompatActivity) : WebChromeClient() {
+class MyChromClient(private val context: Context,private val activity: FragmentActivity) : WebChromeClient() {
     private var mCapturedImageURI: Uri? = null
     private var mFilePathCallback: ValueCallback<Array<Uri>>? = null
     private var mCameraPhotoPath: String? = null

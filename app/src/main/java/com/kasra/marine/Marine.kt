@@ -1,9 +1,10 @@
 package com.kasra.marine
 
 import android.content.Context
-import androidx.multidex.BuildConfig
+import android.webkit.WebView
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.yariksoffice.lingver.Lingver
 
 class Marine : MultiDexApplication() {
 
@@ -14,6 +15,9 @@ class Marine : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
+        WebView(this).destroy()
+        Lingver.init(this, "fa")
+
     }
 
 }
