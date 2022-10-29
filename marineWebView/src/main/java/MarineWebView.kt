@@ -2,7 +2,6 @@ package com.kasra.marine.ui.marine
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.webkit.WebView
@@ -19,12 +18,6 @@ class MarineWebView : WebView {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
     @SuppressLint("SetJavaScriptEnabled")
     fun initWebView(
         appCompatActivity: AppCompatActivity,
@@ -39,10 +32,11 @@ class MarineWebView : WebView {
         webSettings.javaScriptEnabled = true
         webSettings.loadWithOverviewMode = true
         webSettings.allowFileAccess = true
+
         webView.webViewClient = MyClient(onPageFinish = { view, url ->
             onPageFinish(view, url)
         })
-        webView.webChromeClient = MyChromClient(context, appCompatActivity)
+        webView.webChromeClient = MyChromeClient(context, appCompatActivity)
         webView.addJavascriptInterface(
             JavaScriptInterface(onReciveData),
             "AndroidFunction"
@@ -55,4 +49,5 @@ class MarineWebView : WebView {
         val functionValues = values.joinToString(",")
         loadUrl("javascript:($functionName($functionValues))")
     }
+
 }

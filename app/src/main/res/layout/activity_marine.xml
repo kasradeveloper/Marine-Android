@@ -21,7 +21,7 @@
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="submit"
+        android:text="@string/submit"
         android:layout_gravity="center|bottom"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/web_view"
