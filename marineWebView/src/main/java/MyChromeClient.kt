@@ -1,7 +1,9 @@
 package com.kasra.marine.ui.marine
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -12,13 +14,15 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
+import androidx.core.content.ContextCompat
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MyChromClient(private val context: Context,private val activity: FragmentActivity) : WebChromeClient() {
+
+class MyChromeClient(private val context: Context, private val activity: AppCompatActivity) :
+    WebChromeClient() {
     private var mCapturedImageURI: Uri? = null
     private var mFilePathCallback: ValueCallback<Array<Uri>>? = null
     private var mCameraPhotoPath: String? = null
@@ -45,6 +49,17 @@ class MyChromClient(private val context: Context,private val activity: FragmentA
                 mFilePathCallback = null
             }
         }
+
+    private var persmissionPendingIntent: Intent? = null
+    private val persmissionResultLauncher =
+        activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                startActivity.launch(persmissionPendingIntent)
+            } else {
+                persmissionPendingIntent?.let { requestPermission(it) }
+            }
+        }
+
     // For Android 5.0
     override fun onShowFileChooser(
         view: WebView,
@@ -87,7 +102,13 @@ class MyChromClient(private val context: Context,private val activity: FragmentA
         chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
         chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser")
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
-        startActivity.launch(chooserIntent)
+
+        if (checkPermission(context))
+            startActivity.launch(chooserIntent)
+        else
+            requestPermission(chooserIntent)
+
+
         return true
     }
 
@@ -153,5 +174,17 @@ class MyChromClient(private val context: Context,private val activity: FragmentA
             ".jpg",  /* suffix */
             storageDir /* directory */
         )
+    }
+
+    private fun checkPermission(context: Context): Boolean {
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermission(chooserIntent: Intent) {
+        this.persmissionPendingIntent = chooserIntent
+        persmissionResultLauncher.launch(Manifest.permission.CAMERA)
     }
 }

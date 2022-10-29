@@ -2,11 +2,9 @@ package com.kasra.marine.ui.marine
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.webkit.WebView
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 
 class MarineWebView : WebView {
@@ -38,7 +36,7 @@ class MarineWebView : WebView {
         webView.webViewClient = MyClient(onPageFinish = { view, url ->
             onPageFinish(view, url)
         })
-        webView.webChromeClient = MyChromClient(context, appCompatActivity)
+        webView.webChromeClient = MyChromeClient(context, appCompatActivity)
         webView.addJavascriptInterface(
             JavaScriptInterface(onReciveData),
             "AndroidFunction"
@@ -51,4 +49,5 @@ class MarineWebView : WebView {
         val functionValues = values.joinToString(",")
         loadUrl("javascript:($functionName($functionValues))")
     }
+
 }

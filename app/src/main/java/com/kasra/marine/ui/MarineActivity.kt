@@ -24,6 +24,7 @@ class MarineActivity : AppCompatActivity() {
         setContentView(R.layout.activity_marine)
         initView()
     }
+
     private fun setLocale(locale: Locale?) {
         var context: Context = applicationContext
         val resources: Resources = context.resources
@@ -50,7 +51,7 @@ class MarineActivity : AppCompatActivity() {
                 }
             }
         }
-        webView.initWebView(this, "http://192.168.0.60:8070/lego.web/Marine/FormMobile/Home?module=Avid")
+        webView.initWebView(this, "http://192.168.0.60:8030/lego.web/Marine/FormMobile/Home?module=Avid")
         webView.onPageFinish = { _, s ->
             webView.callJsFunction("setAuthorization", arrayListOf("'bearer SU7lHYwIRU14jaKQgW9T2A71CHl1YZuo1laxZ_iUxTgmjFsae9KD2wMbgLd2HU8BOehHRM1OZfGuTRC7uceBayxEwzBirtt2QEQujQ8Xpqm2jbnlmmx6ISkyG3F9mptBeCMyVKxtfV7EqrSJndEm9_OBMnpE9kiszOwW2KE2okNgeO1aoFtrjegXrFeeEgVRhmszxFUKPXPwyzfkJ2mesW-oHioOUEKS5jt_ihSnwZrHnmhGHaGni7A8vyY3aNZLrkwCU_MO0NU4_WZLVu0Nb92JS8IaVdTe5-C0zmzVIYvrFnIPtdqPSm9gSAyq9XSRit3y-kmomWSdXWptcxEFNaw0TRJ3ewh1q7FJagw-GyaZXswL6j34NNEjR2lnIcSmRFVl3H44XyULixksK2gmCJx-oPSUizNBUdQNXr_jCilhMOBjjlsfmKSzhVX_sJDGy8dx_vV4FjB8hMIoSLIbjQoEnVY5ubX8Cb0rUWyKtbayn320fcpEK8nSNOClU2oY'"))
             webView.callJsFunction("setFormSchema_mobile", arrayListOf("{\n" +
@@ -214,7 +215,5 @@ class MarineActivity : AppCompatActivity() {
                     "}"))
         }
     }
-
-
 
 }
