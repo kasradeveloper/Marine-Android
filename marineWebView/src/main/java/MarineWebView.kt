@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MarineWebView : WebView {
@@ -22,7 +24,8 @@ class MarineWebView : WebView {
     fun initWebView(
         appCompatActivity: AppCompatActivity,
         loadUrl: String,
-        onReciveData: ((String?) -> Unit)? = null
+        onReciveData: ((String?) -> Unit)? = null,
+        onError: (String) -> Unit = { }
     ) {
         this.appCompatActivity = appCompatActivity
         this.loadUrl = loadUrl
@@ -33,9 +36,12 @@ class MarineWebView : WebView {
         webSettings.loadWithOverviewMode = true
         webSettings.allowFileAccess = true
 
-        webView.webViewClient = MyClient(onPageFinish = { view, url ->
-            onPageFinish(view, url)
-        })
+
+        webView.webViewClient = MyClient(
+            onPageFinish = { view, url ->
+                onPageFinish(view, url)
+            }, onError = onError
+        )
         webView.webChromeClient = MyChromeClient(context, appCompatActivity)
         webView.addJavascriptInterface(
             JavaScriptInterface(onReciveData),
