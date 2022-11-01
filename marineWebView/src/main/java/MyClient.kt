@@ -10,7 +10,7 @@ import java.lang.Exception
 
 class MyClient(
     private val onPageFinish: (view: WebView, url: String) -> Unit,
-    private val onError: (String) -> Unit
+    private val onError: (WebViewClientError) -> Unit
 ) : WebViewClient() {
 
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
@@ -46,7 +46,7 @@ class MyClient(
         request: WebResourceRequest?,
         error: WebResourceError?
     ) {
-        onError(error?.description.toString())
+        onError(WebViewClientError.GeneralError(view, request, error))
         super.onReceivedError(view, request, error)
     }
 
@@ -56,12 +56,33 @@ class MyClient(
         request: WebResourceRequest?,
         errorResponse: WebResourceResponse?
     ) {
-        onError(errorResponse?.statusCode.toString() + " : " + errorResponse?.reasonPhrase)
+        onError(WebViewClientError.HttpError(view, request, errorResponse))
         super.onReceivedHttpError(view, request, errorResponse)
     }
 
-//    override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-//        onError(error.toString())
-//        super.onReceivedSslError(view, handler, error)
-//    }
+    override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+        onError(WebViewClientError.SslError(view, handler, error))
+        super.onReceivedSslError(view, handler, error)
+    }
+
+    sealed class WebViewClientError {
+        class HttpError(
+            val view: WebView?,
+            val request: WebResourceRequest?,
+            val errorResponse: WebResourceResponse?
+        ) : WebViewClientError()
+
+        class SslError(
+            val view: WebView?,
+            val handler: SslErrorHandler?,
+            val error: android.net.http.SslError?
+        ) : WebViewClientError()
+
+        class GeneralError(
+            val view: WebView?,
+            val request: WebResourceRequest?,
+            val error: WebResourceError?
+        ) :
+            WebViewClientError()
+    }
 }

@@ -24,8 +24,8 @@ class MarineWebView : WebView {
     fun initWebView(
         appCompatActivity: AppCompatActivity,
         loadUrl: String,
+        onError: (MyClient.WebViewClientError) -> Unit,
         onReciveData: ((String?) -> Unit)? = null,
-        onError: (String) -> Unit = { }
     ) {
         this.appCompatActivity = appCompatActivity
         this.loadUrl = loadUrl

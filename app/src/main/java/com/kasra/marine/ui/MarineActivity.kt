@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.bilerplatemvvm.R
 import com.kasra.marine.ui.marine.MarineWebView
+import com.kasra.marine.ui.marine.MyClient
 import com.yariksoffice.lingver.Lingver
 import java.util.*
 
@@ -54,9 +55,19 @@ class MarineActivity : AppCompatActivity() {
         }
         webView.initWebView(
             this,
-            "http://192.168.0.60:8030/lego.web/Marine/FormMobile/Home?module=Avid",
+            "http://192.168.50.122:3000/lego.web/Marine/FormMobile/Home?module=Avid",
             onError = {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                when(it){
+                    is MyClient.WebViewClientError.GeneralError -> {
+                        Toast.makeText(this, it.error.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                    is MyClient.WebViewClientError.HttpError -> {
+                        Toast.makeText(this, it.errorResponse.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                    is MyClient.WebViewClientError.SslError -> {
+                        Toast.makeText(this, it.error.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                }
             })
         webView.onPageFinish = { _, s ->
             webView.callJsFunction(
