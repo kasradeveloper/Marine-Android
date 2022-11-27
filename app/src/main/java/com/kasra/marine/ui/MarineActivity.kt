@@ -55,7 +55,7 @@ class MarineActivity : AppCompatActivity() {
         }
         webView.initWebView(
             this,
-            "http://192.168.50.122:3000/lego.web/Marine/FormMobile/Home?module=Avid",
+            "http://192.168.0.60:8042/lego.web/Marine/FormMobile/Home?module=Avid",
             onError = {
                 when(it){
                     is MyClient.WebViewClientError.GeneralError -> {

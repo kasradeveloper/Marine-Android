@@ -1,6 +1,7 @@
 package com.kasra.marine.ui.marine
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,12 +10,15 @@ import android.os.Build
 import android.os.Environment
 import android.os.Parcelable
 import android.provider.MediaStore
+import android.provider.SyncStateContract.Helpers.insert
+import android.util.Log
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,11 +36,14 @@ class MyChromeClient(private val context: Context, private val activity: AppComp
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 var results: Array<Uri>? = null
                 // Check that the response is a good one
+
+
+                Log.i("MyChromeClient", "onActivityResult: ${it.resultCode}")
                 if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                    if (it.data == null) {
+                    if (it.data?.dataString == null) {
                         // If there is not data, then we may have taken a photo
-                        if (mCameraPhotoPath != null) {
-                            results = arrayOf(Uri.parse(mCameraPhotoPath))
+                        if (mCapturedImageURI != null) {
+                            results = arrayOf(mCapturedImageURI!!)
                         }
                     } else {
                         val dataString = it.data!!.dataString
@@ -72,27 +79,47 @@ class MyChromeClient(private val context: Context, private val activity: AppComp
         }
         mFilePathCallback = filePath
         var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent!!.resolveActivity(context.packageManager) != null) {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "fileName")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image capture by camera")
+        mCapturedImageURI = activity.contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values
+        )
+        takePictureIntent?.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI)
+//        if (takePictureIntent!!.resolveActivity(context.packageManager) != null) {
+
+
+//            val fileName = "new-photo-name.jpg"
+//            val values = ContentValues()
+//            values.put(MediaStore.Images.Media.TITLE, fileName)
+//            values.put(MediaStore.Images.Media.DESCRIPTION, "Image capture by camera")
+//
+
             // Create the File where the photo should go
-            var photoFile: File? = null
-            try {
-                photoFile = createImageFile()
-                takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath)
-            } catch (ex: IOException) {
-                // Error occurred while creating the File
-                ex.printStackTrace()
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                mCameraPhotoPath = "file:" + photoFile.absolutePath
-                takePictureIntent.putExtra(
-                    MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(photoFile)
-                )
-            } else {
-                takePictureIntent = null
-            }
-        }
+//            var photoFile: File? = null
+//            try {
+//                photoFile = createImageFile()
+//            } catch (ex: IOException) {
+//                // Error occurred while creating the File
+//                ex.printStackTrace()
+//            }
+//
+//            // Continue only if the File was successfully created
+//            if (photoFile != null) {
+//                val photoURI: Uri = FileProvider.getUriForFile(
+//                    context,
+//                    "com.example.android.fileprovider",
+//                    photoFile
+//                )
+//                mCameraPhotoPath = "file:" + photoFile.absolutePath
+//                takePictureIntent.putExtra(
+//                    MediaStore.EXTRA_OUTPUT,
+//                    photoURI
+//                )
+//            } else {
+//                takePictureIntent = null
+//            }
+//        }
         val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
         contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
         contentSelectionIntent.type = "image/*"
@@ -107,7 +134,6 @@ class MyChromeClient(private val context: Context, private val activity: AppComp
             startActivity.launch(chooserIntent)
         else
             requestPermission(chooserIntent)
-
 
         return true
     }
@@ -166,14 +192,19 @@ class MyChromeClient(private val context: Context, private val activity: AppComp
         val timeStamp =
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = Environment.getExternalStoragePublicDirectory(
+        val storageDir = activity.getExternalFilesDir(
             Environment.DIRECTORY_PICTURES
         )
-        return File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",  /* suffix */
-            storageDir /* directory */
-        )
+        val resolver = context.contentResolver
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, imageFileName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+        }
+
+        val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+
+       return File(uri?.path!!)
     }
 
     private fun checkPermission(context: Context): Boolean {
