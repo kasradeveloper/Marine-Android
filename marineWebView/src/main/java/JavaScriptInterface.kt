@@ -9,4 +9,8 @@ class JavaScriptInterface internal constructor(
     fun showToast(s: String?) {
         onReciveData?.let { it(s) }
     }
+    @JavascriptInterface
+    fun isValid(b:String?) {
+        onReciveData?.let { it(b) }
+    }
 }
